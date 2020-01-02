@@ -29,7 +29,6 @@ spec:
                 secretKeyRef:
                   name: {{ template "dreamcatchers.fullname" . }}
                   key: postgres_url
-ENV POSTGRES_URL="postgresql://postgres:postgres@postgres/data?schema=data"
           livenessProbe:
             httpGet:
               path: /
