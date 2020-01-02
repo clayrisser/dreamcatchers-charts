@@ -1,0 +1,35 @@
+{{- if .Values.ingress.frontend.enabled }}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ template "dreamcatchers.fullname" . }}-frontend
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    {{- if .Values.ingress.frontend.tls }}
+    {{- if (empty .Values.ingress.frontend.certificate) }}
+    certmanager.k8s.io/cluster-issuer: {{ .Values.ingress.frontend.issuer.name }}
+    kubernetes.io/tls-acme: 'true'
+    {{- end }}
+    nginx.ingress.kubernetes.io/ssl-redirect: 'true'
+    {{- end }}
+  labels:
+    app: {{ template "dreamcatchers.name" . }}-frontend
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  rules:
+    - host: {{ .Values.ingress.frontend.hostname }}
+      http:
+        paths:
+          - path: {{ .Values.ingress.frontend.path }}
+            backend:
+              serviceName: {{ template "dreamcatchers.fullname" . }}-frontend
+              servicePort: http
+  {{- if .Values.ingress.frontend.tls }}
+  tls:
+    - secretName: {{ template "dreamcatchers.frontend-certificate" . }}
+      hosts:
+        - {{ .Values.ingress.frontend.hostname }}
+  {{- end }}
+{{- end }}

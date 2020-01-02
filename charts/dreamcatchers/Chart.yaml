@@ -1,0 +1,13 @@
+name: dreamcatchers
+home: https://git.siliconhills.dev/dreamcatchers/dreamcatchers
+icon: https://cdn.shopify.com/s/files/1/0130/9425/6699/files/logo-nav-blak-pink_110x.png?v=1543333002
+version: 0.0.1
+appVersion: latest
+description: 'dreamcatchers helm chart'
+keywords:
+  - dreamcatchers
+sources:
+  - https://git.siliconhills.dev/dreamcatchers/dreamcatchers
+maintainers:
+  - name: 'Jam Risser'
+    email: jam@codejam.ninja
