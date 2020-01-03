@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: {{ template "dreamcatchers.fullname" . }}-studio
-          image: {{ .Values.images.config.repository }}:{{ .Values.images.config.tag }}
+          image: {{ .Values.images.studio.repository }}:{{ .Values.images.studio.tag }}
           imagePullPolicy: {{ .Values.config.imagePullPolicy }}
           ports:
             - name: container
