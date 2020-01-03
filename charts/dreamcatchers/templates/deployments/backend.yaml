@@ -48,26 +48,26 @@ spec:
             - name: POSTGRES_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "gitlab.sharedname" . }}-postgres-auth
+                  name: {{ template "dreamcatchers.sharedname" . }}-postgres-auth
                   key: POSTGRES_USER
             {{- else }}
             - name: POSTGRES_USERNAME
               valueFrom:
                 configMapKeyRef:
-                  name: {{ template "gitlab.fullname" . }}
+                  name: {{ template "dreamcatchers.fullname" . }}
                   key: postgres_username
             {{- end }}
             {{- if .Values.config.postgres.internal }}
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "gitlab.sharedname" . }}-postgres-auth
+                  name: {{ template "dreamcatchers.sharedname" . }}-postgres-auth
                   key: POSTGRES_PASSWORD
             {{- else }}
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "gitlab.fullname" . }}
+                  name: {{ template "dreamcatchers.fullname" . }}
                   key: postgres_password
             {{- end }}
           livenessProbe:
