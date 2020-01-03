@@ -49,6 +49,17 @@ Calculate backend certificate
 {{- end }}
 
 {{/*
+Calculate studio certificate
+*/}}
+{{- define "dreamcatchers.studio-certificate" }}
+{{- if (not (empty .Values.ingress.studio.certificate)) }}
+{{- printf .Values.ingress.studio.certificate }}
+{{- else }}
+{{- printf "%s-studio-letsencrypt" (include "dreamcatchers.fullname" .) }}
+{{- end }}
+{{- end }}
+
+{{/*
 Calculate pgadmin certificate
 */}}
 {{- define "dreamcatchers.pgadmin-certificate" }}
@@ -121,6 +132,39 @@ Calculate backend base url
 {{- printf "%s://%s%s" $protocol $hostname $path }}
 {{- else }}
 {{- printf "http://%s" (include "dreamcatchers.backend-hostname" .) }}
+{{- end }}
+{{- end }}
+{{- end }}
+
+{{/*
+Calculate studio hostname
+*/}}
+{{- define "dreamcatchers.studio-hostname" }}
+{{- if (and .Values.config.studio.hostname (not (empty .Values.config.studio.hostname))) }}
+{{- printf .Values.config.studio.hostname }}
+{{- else }}
+{{- if .Values.ingress.studio.enabled }}
+{{- printf .Values.ingress.studio.hostname }}
+{{- else }}
+{{- printf "%s-studio" (include "dreamcatchers.fullname" .) }}
+{{- end }}
+{{- end }}
+{{- end }}
+
+{{/*
+Calculate studio base url
+*/}}
+{{- define "dreamcatchers.studio-base-url" }}
+{{- if (and .Values.config.studio.baseUrl (not (empty .Values.config.studio.baseUrl))) }}
+{{- printf .Values.config.studio.baseUrl }}
+{{- else }}
+{{- if .Values.ingress.studio.enabled }}
+{{- $hostname := ((empty (include "dreamcatchers.studio-hostname" .)) | ternary .Values.ingress.studio.hostname (include "dreamcatchers.studio-hostname" .)) }}
+{{- $path := (eq .Values.ingress.studio.path "/" | ternary "" .Values.ingress.studio.path) }}
+{{- $protocol := (.Values.ingress.studio.tls | ternary "https" "http") }}
+{{- printf "%s://%s%s" $protocol $hostname $path }}
+{{- else }}
+{{- printf "http://%s" (include "dreamcatchers.studio-hostname" .) }}
 {{- end }}
 {{- end }}
 {{- end }}

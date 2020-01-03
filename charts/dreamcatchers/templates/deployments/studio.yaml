@@ -1,9 +1,9 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: {{ template "dreamcatchers.fullname" . }}-backend
+  name: {{ template "dreamcatchers.fullname" . }}-studio
   labels:
-    app: {{ template "dreamcatchers.name" . }}-backend
+    app: {{ template "dreamcatchers.name" . }}-studio
     chart: {{ .Chart.Name }}-{{ .Chart.Version }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -13,16 +13,16 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ template "dreamcatchers.name" . }}-backend
+        app: {{ template "dreamcatchers.name" . }}-studio
         release: {{ .Release.Name }}
     spec:
       containers:
-        - name: {{ template "dreamcatchers.fullname" . }}-backend
+        - name: {{ template "dreamcatchers.fullname" . }}-studio
           image: {{ .Values.images.backend.repository }}:{{ .Values.images.backend.tag }}
           imagePullPolicy: {{ .Values.config.imagePullPolicy }}
           ports:
             - name: container
-              containerPort: 5555
+              containerPort: 4000
           env:
             - name: POSTGRES_URL
               valueFrom:

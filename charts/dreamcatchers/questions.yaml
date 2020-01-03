@@ -452,6 +452,72 @@ questions:
         max: 32767
         show_if: ingress.backend.enabled=false
         label: 'backend http port'
+  - variable: ingress.studio.enabled
+    default: true
+    description: ''
+    type: boolean
+    label: 'studio ingress enabled'
+    show_subquestion_if: true
+    group: 'Services and Load Balancing'
+    subquestions:
+      - variable: ingress.studio.tls
+        default: false
+        description: ''
+        type: boolean
+        required: true
+        label: 'studio ingress tls'
+      - variable: ingress.studio.hostname
+        default: xip.io
+        description: ''
+        type: hostname
+        required: true
+        label: 'studio ingress hostname'
+      - variable: ingress.studio.path
+        default: /
+        description: ''
+        type: string
+        required: true
+        label: 'studio ingress path'
+      - variable: ingress.studio.issuer.name
+        default: letsencrypt-staging
+        description: ''
+        type: enum
+        show_if: ingress.studio.tls=true
+        options:
+          - none
+          - letsencrypt-staging
+          - letsencrypt-prod
+        required: true
+        label: 'studio ingress issuer name'
+      - variable: ingress.studio.certificate
+        default: ''
+        description: ''
+        type: string
+        show_if: ingress.studio.tls=true&&ingress.studio.issuer.name=none
+        required: false
+        label: 'studio ingress certificate'
+  - variable: service.studio.type
+    default: NodePort
+    description: ''
+    type: enum
+    show_if: ingress.studio.enabled=false
+    options:
+      - ClusterIP
+      - NodePort
+      - LoadBalancer
+    required: true
+    label: 'studio service type'
+    show_subquestion_if: NodePort
+    group: 'Services and Load Balancing'
+    subquestions:
+      - variable: service.studio.nodePorts.http
+        default: ''
+        description: ''
+        type: int
+        min: 30000
+        max: 32767
+        show_if: ingress.studio.enabled=false
+        label: 'studio http port'
   - variable: ingress.pgadmin.enabled
     default: true
     description: ''
@@ -571,6 +637,20 @@ questions:
     type: string
     required: true
     label: 'backend tag'
+    group: Images
+  - variable: images.studio.repository
+    default: atxwebdesigner/dreamcatchers-studio
+    description: ''
+    type: string
+    required: true
+    label: 'studio repository'
+    group: Images
+  - variable: images.studio.tag
+    default: latest
+    description: ''
+    type: string
+    required: true
+    label: 'studio tag'
     group: Images
   - variable: images.pgadmin.repository
     default: dpage/pgadmin4
