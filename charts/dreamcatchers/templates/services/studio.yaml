@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "dreamcatchers.fullname" . }}-studio
+  labels:
+    app: {{ template "dreamcatchers.name" . }}-studio
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  {{- if .Values.ingress.backend.enabled }}
+  type: ClusterIP
+  {{- else }}
+  type: {{ .Values.service.studio.type }}
+  {{- if (or (eq .Values.service.studio.type "LoadBalancer") (eq .Values.service.studio.type "NodePort")) }}
+  externalTrafficPolicy: {{ .Values.service.studio.externalTrafficPolicy }}
+  {{- end }}
+  {{- end }}
+  ports:
+    - name: http
+      port: 80
+      targetPort: container
+      {{- if (and (eq .Values.service.studio.type "NodePort") (not (empty .Values.service.studio.nodePorts.http))) }}
+      nodePort: {{ .Values.service.studio.nodePorts.http }}
+      {{- end }}
+  selector:
+    app: {{ template "dreamcatchers.name" . }}-studio
+    release: {{ .Release.Name }}
