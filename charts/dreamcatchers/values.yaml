@@ -10,7 +10,7 @@ images:
     tag: 4.11
 
 config:
-  imagePullPolicy: IfNotPresent
+  imagePullPolicy: Always
   updateStrategy: RollingUpdate
   frontend:
     baseUrl: ''
@@ -83,7 +83,7 @@ ingress:
     tls: false
     issuer:
       name: letsencrypt-staging
-  
+
 
 persistence:
   accessMode: ReadWriteOnce

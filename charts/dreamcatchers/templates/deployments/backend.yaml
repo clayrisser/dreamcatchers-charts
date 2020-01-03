@@ -29,6 +29,47 @@ spec:
                 secretKeyRef:
                   name: {{ template "dreamcatchers.fullname" . }}
                   key: postgres_url
+            - name: POSTGRES_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "dreamcatchers.fullname" . }}
+                  key: postgres_host
+            - name: POSTGRES_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "dreamcatchers.fullname" . }}
+                  key: postgres_database
+            - name: POSTGRES_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "dreamcatchers.fullname" . }}
+                  key: postgres_port
+            {{- if .Values.config.postgres.internal }}
+            - name: POSTGRES_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "gitlab.sharedname" . }}-postgres-auth
+                  key: POSTGRES_USER
+            {{- else }}
+            - name: POSTGRES_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "gitlab.fullname" . }}
+                  key: postgres_username
+            {{- end }}
+            {{- if .Values.config.postgres.internal }}
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "gitlab.sharedname" . }}-postgres-auth
+                  key: POSTGRES_PASSWORD
+            {{- else }}
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "gitlab.fullname" . }}
+                  key: postgres_password
+            {{- end }}
           livenessProbe:
             httpGet:
               path: /

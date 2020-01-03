@@ -23,7 +23,12 @@ spec:
           ports:
             - name: container
               containerPort: 3000
-          env: []
+          env:
+            - name: BACKEND_BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "dreamcatchers.fullname" . }}
+                  key: backend_base_url
           livenessProbe:
             httpGet:
               path: /
