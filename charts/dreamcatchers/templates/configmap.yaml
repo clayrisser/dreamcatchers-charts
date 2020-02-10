@@ -21,3 +21,9 @@ data:
   pgadmin_email: {{ .Values.config.pgadmin.email | quote }}
   {{- end }}
   backend_base_url: {{ template "dreamcatchers.backend-base-url" . }}
+  email_from: {{ .Values.config.backend.emailFrom | quote }}
+  email_to: {{ .Values.config.backend.emailTo | quote }}
+  mode: {{ .Values.config.backend.mode | quote }}
+  smtp_host: {{ .Values.config.backend.smtpHost | quote }}
+  smtp_port: {{ .Values.config.backend.smtpPort | quote }}
+  smtp_user: {{ .Values.config.backend.smtpUser | quote }}

@@ -21,6 +21,15 @@ config:
   backend:
     baseUrl: ''
     hostname: ''
+    emailFrom: ''
+    emailTo: ''
+    loginId: ''
+    mode: production
+    smtpHost: ''
+    smtpPassword: ''
+    smtpPort: 465
+    smtpUser: ''
+    transactionKey: ''
   studio:
     baseUrl: ''
     hostname: ''

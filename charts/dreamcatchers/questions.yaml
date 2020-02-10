@@ -30,6 +30,72 @@ questions:
     required: true
     label: 'backend base url'
     group: Config
+  - variable: config.backend.emailFrom
+    default: ''
+    description: ''
+    type: string
+    required: true
+    label: 'backend email from'
+    group: Config
+  - variable: config.backend.emailTo
+    default: ''
+    description: ''
+    type: string
+    required: true
+    label: 'backend email to'
+    group: Config
+  - variable: config.backend.loginId
+    default: ''
+    description: ''
+    type: string
+    required: true
+    label: 'backend login id'
+    group: Config
+  - variable: config.backend.mode
+    default: production
+    description: ''
+    type: enum
+    options:
+      - production
+      - development
+    required: true
+    label: 'backend mode'
+    group: Config
+  - variable: config.backend.smtpHost
+    default: ''
+    description: ''
+    type: string
+    required: true
+    label: 'backend smtp host'
+    group: Config
+  - variable: config.backend.smtpPassword
+    default: ''
+    description: ''
+    type: string
+    required: true
+    label: 'backend smtp password'
+    group: Config
+  - variable: config.backend.smtpPort
+    default: ''
+    description: ''
+    type: int
+    required: true
+    label: 'backend smtp port'
+    group: Config
+  - variable: config.backend.smtpUser
+    default: ''
+    description: ''
+    type: string
+    required: true
+    label: 'backend smtp user'
+    group: Config
+  - variable: config.backend.transactionKey
+    default: ''
+    description: ''
+    type: string
+    required: true
+    label: 'backend transaction key'
+    group: Config
 
 # Postgres Config
   - variable: config.postgres.internal

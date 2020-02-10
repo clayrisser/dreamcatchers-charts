@@ -24,6 +24,51 @@ spec:
             - name: container
               containerPort: 4000
           env:
+            - name: SMTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "dreamcatchers.fullname" . }}
+                  key: smtp_password
+            - name: LOGIN_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "dreamcatchers.fullname" . }}
+                  key: login_id
+            - name: TRANSACTION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "dreamcatchers.fullname" . }}
+                  key: transaction_key
+            - name: SMTP_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "dreamcatchers.fullname" . }}
+                  key: smtp_user
+            - name: SMTP_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "dreamcatchers.fullname" . }}
+                  key: smtp_port
+            - name: SMTP_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "dreamcatchers.fullname" . }}
+                  key: smtp_host
+            - name: MODE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "dreamcatchers.fullname" . }}
+                  key: mode
+            - name: EMAIL_TO
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "dreamcatchers.fullname" . }}
+                  key: email_to
+            - name: EMAIL_FROM
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "dreamcatchers.fullname" . }}
+                  key: email_from
             - name: POSTGRES_URL
               valueFrom:
                 secretKeyRef:
